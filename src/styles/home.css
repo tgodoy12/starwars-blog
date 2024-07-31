@@ -9,3 +9,7 @@
     object-fit: contain;
     max-height: 500px;
 }
+
+.add-form {
+    color: white;
+}

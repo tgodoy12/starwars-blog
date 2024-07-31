@@ -19,17 +19,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllCharacters: async () => {
 				
 				try {
-					const response = await fetch("https://swapi.dev/api/people/");
+					const response = await fetch("https://flask-rest-hello-br5y.onrender.com/characters");
 					if(!response.ok) {
 						throw new Error("Status: " + response.status)
 					}
 					const data = await response.json();
-					const charactersId = data.results.map(character => {
-						const id = character.url.split("/")[5];
-						return { ...character, id };
-					})
+					console.log(data.results);
+					// const characters = data.results.map(character => {
+					// 	const id = character.url.split("/")[5];
+					// 	return { ...character, id };
+					// })
 					// console.log(data.results)
-					setStore({ characters: charactersId });
+					setStore({ characters: data.results });
 					
 					return true;
 				} catch (error) {
@@ -40,17 +41,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllPlanets: async () => {
 				
 				try {
-					const response = await fetch("https://swapi.dev/api/planets/");
+					const response = await fetch("https://flask-rest-hello-br5y.onrender.com/planets");
 					if(!response.ok) {
 						throw new Error("Status: " + response.status)
 					}
 					const data = await response.json();
-					const planetsId = data.results.map(planet => {
-						const id = planet.url.split("/")[5];
-						return { ...planet, id };
-					})
+					// const planetsId = data.results.map(planet => {
+					// 	const id = planet.url.split("/")[5];
+					// 	return { ...planet, id };
+					// })
 					// console.log(data.results)
-					setStore({ planets: planetsId });
+					setStore({ planets: data.results });
 					
 					return true;
 				} catch (error) {
@@ -61,17 +62,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllVehicles: async () => {
 				
 				try {
-					const response = await fetch("https://swapi.dev/api/vehicles/");
+					const response = await fetch("https://flask-rest-hello-br5y.onrender.com/vehicles");
 					if(!response.ok) {
 						throw new Error("Status: " + response.status)
 					}
 					const data = await response.json();
-					const vehiclesId = data.results.map(vehicle => {
-						const id = vehicle.url.split("/")[5];
-						return { ...vehicle, id };
-					})
-					console.log(data.results)
-					setStore({ vehicles: vehiclesId });
+					// const vehiclesId = data.results.map(vehicle => {
+					// 	const id = vehicle.url.split("/")[5];
+					// 	return { ...vehicle, id };
+					// })
+					// console.log(data.results)
+					setStore({ vehicles: data.results });
 					
 					return true;
 				} catch (error) {

@@ -8,6 +8,7 @@ import { Single } from "./views/single.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar.jsx";
+import { Add } from "./views/add.jsx";
 
 
 
@@ -26,6 +27,7 @@ const Layout = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/demo" element={<Demo />} />
 						<Route path="/single/:type/:theid" element={<Single />} />
+						<Route path="/add" element={<Add />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					
