@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
 import starwars from "../../img/icons8-la-guerra-de-las-galaxias-50.png";
@@ -6,6 +6,25 @@ import starwars from "../../img/icons8-la-guerra-de-las-galaxias-50.png";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const nav = useNavigate();
+
+	//para controlar que no se superpongan los dropdowns
+	const [addDropdownOpen, setAddDropdownOpen] = useState(false);
+    const [favoritesDropdownOpen, setFavoritesDropdownOpen] = useState(false);
+
+    const handleAddDropdown = () => {
+        setAddDropdownOpen(!addDropdownOpen);
+        if (favoritesDropdownOpen) setFavoritesDropdownOpen(false);
+    };
+
+    const handleFavoritesDropdown = () => {
+        setFavoritesDropdownOpen(!favoritesDropdownOpen);
+        if (addDropdownOpen) setAddDropdownOpen(false);
+    };
+
+	
+	const handleNavigate = (type) => {
+        nav(`/add/${type}`);
+    };
 	
 	// console.log(store.favorites);
 	return (
@@ -19,21 +38,24 @@ export const Navbar = () => {
 				</div>
 
 				<div className="d-flex">
-					<div className="dropdown me-3">
-						<button className="btn btn-dark btn-sm dropdown-toggle position-relative" data-bs-auto-close="false" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fas fa-plus" style={{color: "FFFFFF"}}></i>
+					<div className={`dropdown ${store.favorites.length > 0 ? 'me-5' : 'me-3'}`}>
+						<button className="btn btn-dark btn-sm dropdown-toggle position-relative" data-bs-auto-close="true" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" 
+						aria-expanded={addDropdownOpen ? "true" : "false"} onClick={handleAddDropdown}>
+							<i className="fas fa-plus" style={{color: "FFFFFF"}}></i>
 						</button>
 						<ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-							<li className="dropdown-item d-flex justify-content-end fs-6 fw-lighter">Planets</li>
-							<li className="dropdown-item d-flex justify-content-end fs-6 fw-lighter">Characters</li>
-							<li className="dropdown-item d-flex justify-content-end fs-6 fw-lighter">Vehicles</li>
+							<li className="dropdown-item d-flex fs-6 fw-lighter" onClick={() => handleNavigate('planets')}>Planets</li>
+							<li className="dropdown-item d-flex fs-6 fw-lighter" onClick={() => handleNavigate('characters')}>Characters</li>
+							<li className="dropdown-item d-flex fs-6 fw-lighter" onClick={() => handleNavigate('vehicles')}>Vehicles</li>
 						</ul>
 						
 					</div>
 
 					{/* Likes (orange heart) dropdown button */}
 					<div className="dropdown">
-						<button className="btn btn-dark btn-sm dropdown-toggle position-relative" data-bs-auto-close="false" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+						<button className="btn btn-dark btn-sm dropdown-toggle position-relative" data-bs-auto-close="true" type="button" id="dropdownMenuButton2" 
+						data-bs-toggle="dropdown" aria-expanded={favoritesDropdownOpen ? "true" : "false"}
+						onClick={handleFavoritesDropdown}>
 							<i className="fas fa-heart" style={{color: "#fca311"}}></i>
 
 							{/* badge que muestra store.favorites.length */}

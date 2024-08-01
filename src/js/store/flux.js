@@ -80,6 +80,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;	
 				}
 			},
+			
+			postVehicle: async (name, model, manufacturer, costInCredits, length, maxAtmospheringSpeed, crew, passengers, cargoCapacity, consumables, vehicleClass) => {
+				try {
+					const response = await fetch("https://flask-rest-hello-br5y.onrender.com/vehicle", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							name: name,
+							model: model,
+							manufacturer: manufacturer,
+							cost_in_credits: costInCredits,
+							length: length,
+							max_atmosphering_speed: maxAtmospheringSpeed,
+							crew: crew,
+							passengers: passengers,
+							cargo_capacity: cargoCapacity,
+							consumables: consumables,
+							vehicle_class: vehicleClass
+						})
+					});
+			
+					const data = await response.json();
+					console.log("Response data:", data);
+				} catch (error) {
+					console.log("Error:", error);
+				}
+			},
 
 			likes: (name) => {
 				const store = getStore();

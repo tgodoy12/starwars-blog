@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "../store/appContext";
 import { useFormik } from 'formik';
 
 const validate = values => {
@@ -12,6 +13,7 @@ const validate = values => {
 };
 
 const Addform = (props) => {
+    const {actions} = useContext(Context);
     //declaro initialValues donde se agregan los fields a traves de los props
     //que paso en la page add.jsx
     const initialValues = {};
@@ -24,8 +26,21 @@ const Addform = (props) => {
     const formik = useFormik({
         initialValues: initialValues,
         validate,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            console.log("Form values:", values);
+            await actions.postVehicle(
+                values.name,
+                values.model,
+                values.manufacturer,
+                values.cost_in_credits,
+                values.length,
+                values.max_atmosphering_speed,
+                values.crew,
+                values.passengers,
+                values.cargo_capacity,
+                values.consumables,
+                values.vehicle_class
+            );
         },
     });
 
